@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a29ed771-ca20-4117-a8c5-be04cda7813b" name="Default Changelist" comment="" />
+    <list default="true" id="a29ed771-ca20-4117-a8c5-be04cda7813b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/create_video.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/events_alignment.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scratch_for_plotting.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_base.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_base.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/preprocessing.py" beforeDir="false" afterPath="$PROJECT_DIR$/preprocessing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/running_preprocessing_2p.py" beforeDir="false" afterPath="$PROJECT_DIR$/running_preprocessing_2p.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,7 +23,11 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="20gb547zrVgxgLsijQiGT913hnF" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -22,6 +35,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$USER_HOME$/src/calcium_imaging_analysis" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -64,7 +78,21 @@
       <workItem from="1638450829977" duration="605000" />
       <workItem from="1642412987624" duration="47000" />
       <workItem from="1642501366188" duration="5424000" />
-      <workItem from="1642515598937" duration="20032000" />
+      <workItem from="1642515598937" duration="77099000" />
+      <workItem from="1643113984888" duration="50000" />
+      <workItem from="1643118222348" duration="1069000" />
+      <workItem from="1643201497599" duration="3399000" />
+      <workItem from="1645698269776" duration="4589000" />
+      <workItem from="1646399721982" duration="599000" />
+      <workItem from="1646404882989" duration="1212000" />
+      <workItem from="1646664698757" duration="454000" />
+      <workItem from="1646738109530" duration="35623000" />
+      <workItem from="1648113304804" duration="8220000" />
+      <workItem from="1648122580070" duration="5006000" />
+      <workItem from="1648127930625" duration="9148000" />
+      <workItem from="1648151689259" duration="72000" />
+      <workItem from="1648152099850" duration="5967000" />
+      <workItem from="1648454263869" duration="28569000" />
     </task>
     <servers />
   </component>
@@ -72,20 +100,30 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="3390" y="347" width="374" height="383" key="FileChooserDialogImpl" timestamp="1642589835988">
-      <screen x="2560" y="0" width="1920" height="1080" />
-    </state>
-    <state x="3390" y="347" width="374" height="383" key="FileChooserDialogImpl/72.27.2488.1413/2560.0.1920.1080@2560.0.1920.1080" timestamp="1642589835988" />
-    <state x="1147" y="481" width="424" height="491" key="FileChooserDialogImpl/72.27.2488.1413@72.27.2488.1413" timestamp="1637158694925" />
-    <state x="859" y="355" key="SettingsEditor" timestamp="1636469071141">
+    <state x="1148" y="481" width="374" height="383" key="FileChooserDialogImpl" timestamp="1648478228410">
       <screen x="72" y="27" width="2488" height="1413" />
     </state>
-    <state x="859" y="355" key="SettingsEditor/72.27.2488.1413@72.27.2488.1413" timestamp="1636469071141" />
-    <state x="3296" y="398" key="com.intellij.ide.util.TipDialog" timestamp="1642515609720">
-      <screen x="2560" y="0" width="1920" height="1080" />
+    <state x="3390" y="347" width="374" height="383" key="FileChooserDialogImpl/72.27.2488.1413/2560.0.1920.1080@2560.0.1920.1080" timestamp="1648129825634" />
+    <state x="1148" y="481" key="FileChooserDialogImpl/72.27.2488.1413/2560.0.1920.1080@72.27.2488.1413" timestamp="1648478228410" />
+    <state x="702" y="248" key="SettingsEditor" timestamp="1647442704220">
+      <screen x="72" y="27" width="2488" height="1413" />
     </state>
-    <state x="779" y="415" key="com.intellij.ide.util.TipDialog/70.27.1850.1053@70.27.1850.1053" timestamp="1638450833185" />
-    <state x="3296" y="398" key="com.intellij.ide.util.TipDialog/72.27.2488.1413/2560.0.1920.1080@2560.0.1920.1080" timestamp="1642515609720" />
-    <state x="1026" y="547" key="com.intellij.ide.util.TipDialog/72.27.2488.1413@72.27.2488.1413" timestamp="1637575263511" />
+    <state x="702" y="248" key="SettingsEditor/72.27.2488.1413/2560.0.1920.1080@2560.0.1920.1080" timestamp="1647442704220" />
+    <state x="1026" y="548" key="com.intellij.ide.util.TipDialog" timestamp="1648454265884">
+      <screen x="72" y="27" width="2488" height="1413" />
+    </state>
+    <state x="3296" y="398" key="com.intellij.ide.util.TipDialog/72.27.2488.1413/2560.0.1920.1080@2560.0.1920.1080" timestamp="1648127933714" />
+    <state x="1026" y="548" key="com.intellij.ide.util.TipDialog/72.27.2488.1413/2560.0.1920.1080@72.27.2488.1413" timestamp="1648454265884" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/scratch_for_plotting.py</url>
+          <line>36</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
