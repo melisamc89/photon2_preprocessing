@@ -116,42 +116,46 @@ Y_rec = Y_rec.transpose([2, 0, 1])
 # convert the variable to a caiman movie type
 Y_rec = cm.movie(Y_rec)
 
-stimuli_vector = np.zeros((video.shape[0],))
+stimuli_vector_1 = np.zeros((video.shape[0],))
+alpha_vector = np.ones((video.shape[0],))*0.2
 for sound_index in range(6):
     for i in range(len(sounds_list[sound_index])):
-        stimuli_vector[sounds_list[sound_index][i]+int(timeline[1]):sounds_list[sound_index][i]+int(srate * 12)+int(timeline[1])]=sound_index+1
+        stimuli_vector_1[sounds_list[sound_index][i]+int(timeline[1]):sounds_list[sound_index][i]+int(srate * 12)+int(timeline[1])]=sound_index+1
+        alpha_vector[sounds_list[sound_index][i]+int(timeline[1]):sounds_list[sound_index][i]+int(srate * 12)+int(timeline[1])]=0.2
+        alpha_vector[sounds_list[sound_index][i]+int(timeline[1]):sounds_list[sound_index][i]+int(srate * 2)+int(timeline[1])]=0.5
 
 
 temporal_variable = np.arange(0, len(C_0[0])) / srate
 
 Y_rec_max =  int(np.nanmax( np.nanmax(Y_rec,axis=(1,2))))
 movie_max = int(np.nanmax( np.nanmax(video,axis=(1,2))))
-
+##############################
+## complete plot
 for n in range(74,75):
     print('cell number = ' , n)
     #figure, axes = plt.subplots(1,4)
     # create a figure for every neuron
-    for time_index in range(video.shape[0]):
-        if time_index % 30 == 0:
+    for time_index in range(0,video.shape[0]):
+        if time_index > 750*33 and time_index < 850*33:
             figure = plt.figure()
             gs = plt.GridSpec(6,6)
             axes = figure.add_subplot(gs[0:3, 0:2])
             axes.set_title('Raw video', fontsize = 15)
-            axes.imshow(video[time_index, :, :], cmap='gray',vmin=0.01, vmax=movie_max)
+            axes.imshow(video[time_index, :, :], cmap='gray',vmin=0.01, vmax=movie_max/2)
             counter = 0
             for c in coordinates:
                 if counter == n:
                     v = c['coordinates']
                     c['bbox'] = [np.floor(np.nanmin(v[:, 1])), np.ceil(np.nanmax(v[:, 1])),
                                  np.floor(np.nanmin(v[:, 0])), np.ceil(np.nanmax(v[:, 0]))]
-                    axes.plot(*v.T, c=colors[int(stimuli_vector[time_index])])
+                    axes.plot(*v.T, c=colors[int(stimuli_vector_1[time_index])])
                 counter = counter + 1
             #axes.set_xlabel('Pixel',fontsize = 12)
             axes.set_ylabel('Pixel',fontsize = 12)
 
             axes = figure.add_subplot(gs[3:6, 0:2])
             axes.set_title('CaImAn model', fontsize = 15)
-            axes.imshow(Y_rec[time_index, :, :], cmap='gray',vmin=0.0, vmax=Y_rec_max/2)
+            axes.imshow(Y_rec[time_index, :, :], cmap='gray',vmin=0.0, vmax=Y_rec_max/10)
             # pos = axes.imshow(Y_rec[time_index, :, :], cmap='gray',vmin=0, vmax=Y_rec_max)
             # figure.colorbar(pos, ax=axes)
             counter = 0
@@ -160,7 +164,7 @@ for n in range(74,75):
                     v = c['coordinates']
                     c['bbox'] = [np.floor(np.nanmin(v[:, 1])), np.ceil(np.nanmax(v[:, 1])),
                                  np.floor(np.nanmin(v[:, 0])), np.ceil(np.nanmax(v[:, 0]))]
-                    axes.plot(*v.T, c=colors[int(stimuli_vector[time_index])])
+                    axes.plot(*v.T, c=colors[int(stimuli_vector_1[time_index])])
                 counter = counter + 1
             axes.set_xlabel('Pixel',fontsize = 12)
             axes.set_ylabel('Pixel',fontsize = 12)
@@ -187,7 +191,7 @@ for n in range(74,75):
             axes.set_xlabel('t [s]', fontsize=12)
             #axes.set_ylim([0,1])
             axes.set_ylabel('Actvivity', fontsize=12)
-            rect = Rectangle((temporal_variable[time_index - int(srate)],0),2,1, fill=True, color=color2[int(stimuli_vector[time_index])], linestyle='-', linewidth=2, alpha = 0.2)
+            rect = Rectangle((temporal_variable[time_index - int(srate)],0),2,1, fill=True, color=color2[int(stimuli_vector_1[time_index])], linestyle='-', linewidth=2, alpha = alpha_vector[time_index])
             axes.vlines(time_index/srate ,0,1,linestyles ="dotted",color = 'k')
             axes.add_patch(rect)
 
@@ -200,4 +204,105 @@ for n in range(74,75):
 
 
 ##################################3
+
+## all cells plots for movie
+
+for time_index in range(0,video.shape[0]):
+    if time_index % 30 == 0:
+        figure = plt.figure()
+        gs = plt.GridSpec(1,1)
+        axes = figure.add_subplot(gs[0, 0])
+        axes.set_title('Raw data', fontsize = 15)
+        axes.imshow(video[time_index, :, :], cmap='gray',vmin=0.01, vmax=movie_max/2)
+        for c in coordinates:
+            v = c['coordinates']
+            c['bbox'] = [np.floor(np.nanmin(v[:, 1])), np.ceil(np.nanmax(v[:, 1])),
+                        np.floor(np.nanmin(v[:, 0])), np.ceil(np.nanmax(v[:, 0]))]
+            axes.plot(*v.T, c=colors[int(stimuli_vector_1[time_index])])
+            #axes.set_xlabel('Pixel',fontsize = 12)
+        axes.set_ylabel('Pixel',fontsize = 12)
+
+        figure.savefig(figure_path + 'movie_raw_'+ '_' + f'{100000+time_index}' + '.png')
+        plt.close()
+        if time_index % 3000 == 0:
+            print(time_index)
+
+
+########################################################################
+### crate the sum over all video
+total_activity = np.nanmean(C_final,axis = 0)
+total_activity_std = np.nanstd(C_final,axis = 0)
+
+##############################
+## complete plot
+for n in range(1):
+    print('cell number = ' , n)
+    #figure, axes = plt.subplots(1,4)
+    # create a figure for every neuron
+    for time_index in range(0,video.shape[0]):
+        if time_index > 800*30 and time_index < 1000*33:
+            figure = plt.figure()
+            gs = plt.GridSpec(6,6)
+            axes = figure.add_subplot(gs[0:3, 0:2])
+            axes.set_title('Raw video', fontsize = 15)
+            axes.imshow(video[time_index, :, :], cmap='gray',vmin=0.01, vmax=movie_max/2)
+            counter = 0
+            for c in coordinates:
+                if counter:
+                    v = c['coordinates']
+                    c['bbox'] = [np.floor(np.nanmin(v[:, 1])), np.ceil(np.nanmax(v[:, 1])),
+                                 np.floor(np.nanmin(v[:, 0])), np.ceil(np.nanmax(v[:, 0]))]
+                    axes.plot(*v.T, c=colors[int(stimuli_vector_1[time_index])])
+                counter = counter + 1
+            #axes.set_xlabel('Pixel',fontsize = 12)
+            axes.set_ylabel('Pixel',fontsize = 12)
+
+            axes = figure.add_subplot(gs[3:6, 0:2])
+            axes.set_title('CaImAn model', fontsize = 15)
+            axes.imshow(Y_rec[time_index, :, :], cmap='gray',vmin=0.0, vmax=Y_rec_max/5)
+            # pos = axes.imshow(Y_rec[time_index, :, :], cmap='gray',vmin=0, vmax=Y_rec_max)
+            # figure.colorbar(pos, ax=axes)
+            counter = 0
+            for c in coordinates:
+                if counter:
+                    v = c['coordinates']
+                    c['bbox'] = [np.floor(np.nanmin(v[:, 1])), np.ceil(np.nanmax(v[:, 1])),
+                                 np.floor(np.nanmin(v[:, 0])), np.ceil(np.nanmax(v[:, 0]))]
+                    axes.plot(*v.T, c=colors[int(stimuli_vector_1[time_index])])
+                counter = counter + 1
+            axes.set_xlabel('Pixel',fontsize = 12)
+            axes.set_ylabel('Pixel',fontsize = 12)
+
+            axes = figure.add_subplot(gs[0:2, 2:6])
+            axes.set_title('Calcium Trace', fontsize = 15)
+            axes.plot(temporal_variable, total_activity, c='k')
+            axes.set_xlabel('t [s]', fontsize=15)
+            axes.set_yticks([])
+            axes.set_ylabel('Actvivity', fontsize=15)
+
+            for sound_index in range(len(sounds_list)):
+                for j in range(0,sounds_list[sound_index].shape[0]):
+                    sound_onset = int(sounds_list[sound_index][j] + timeline[1])
+                    sound_end = int(sound_onset  + stim_lenght  * srate)
+                    axes.plot(np.arange(sound_onset,sound_end)/srate,total_activity[sound_onset:sound_end], c = 'k')
+                    iti_onset = sound_end
+                    iti_end = int(sound_end + iti_lenght*srate)
+                    axes.plot(np.arange(iti_onset,iti_end)/srate,total_activity[iti_onset:iti_end], c = colors[sound_index+1])
+            axes.vlines(time_index/srate,0,0.2,'k', linestyles= 'dotted')
+
+            axes = figure.add_subplot(gs[3:6, 3:5])
+            axes.plot(temporal_variable[time_index - int(srate * 2):time_index + int(srate * 2)], total_activity[time_index - int(srate * 2):time_index + int(srate * 2)], c = 'k')
+            axes.set_xlabel('t [s]', fontsize=12)
+            #axes.set_ylim([0,1])
+            axes.set_ylabel('Actvivity', fontsize=12)
+            rect = Rectangle((temporal_variable[time_index - int(srate)],0),2,1, fill=True, color=color2[int(stimuli_vector_1[time_index])], linestyle='-', linewidth=2, alpha = alpha_vector[time_index])
+            axes.vlines(time_index/srate ,0,0.2,linestyles ="dotted",color = 'k')
+            axes.add_patch(rect)
+
+            figure.set_size_inches([15, 10])
+
+            figure.savefig(figure_path + 'movie_'+ f'{n}' + '_' + f'{100000+time_index}' + '.png')
+            plt.close()
+            if time_index % 330 == 0:
+                print(time_index)
 

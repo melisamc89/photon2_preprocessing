@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a29ed771-ca20-4117-a8c5-be04cda7813b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/create_video.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/events_alignment.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scratch_for_plotting.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_base.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_base.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/preprocessing.py" beforeDir="false" afterPath="$PROJECT_DIR$/preprocessing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/running_preprocessing_2p.py" beforeDir="false" afterPath="$PROJECT_DIR$/running_preprocessing_2p.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/create_video.py" beforeDir="false" afterPath="$PROJECT_DIR$/create_video.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +86,9 @@
       <workItem from="1648127930625" duration="9148000" />
       <workItem from="1648151689259" duration="72000" />
       <workItem from="1648152099850" duration="5967000" />
-      <workItem from="1648454263869" duration="28569000" />
+      <workItem from="1648454263869" duration="31180000" />
+      <workItem from="1648557133501" duration="11802000" />
+      <workItem from="1649248610086" duration="1224000" />
     </task>
     <servers />
   </component>
@@ -100,19 +96,19 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1148" y="481" width="374" height="383" key="FileChooserDialogImpl" timestamp="1648478228410">
-      <screen x="72" y="27" width="2488" height="1413" />
+    <state x="3390" y="347" width="374" height="390" key="FileChooserDialogImpl" timestamp="1649248633290">
+      <screen x="2560" y="0" width="1920" height="1080" />
     </state>
-    <state x="3390" y="347" width="374" height="383" key="FileChooserDialogImpl/72.27.2488.1413/2560.0.1920.1080@2560.0.1920.1080" timestamp="1648129825634" />
+    <state x="3390" y="347" width="374" height="390" key="FileChooserDialogImpl/72.27.2488.1413/2560.0.1920.1080@2560.0.1920.1080" timestamp="1649248633290" />
     <state x="1148" y="481" key="FileChooserDialogImpl/72.27.2488.1413/2560.0.1920.1080@72.27.2488.1413" timestamp="1648478228410" />
     <state x="702" y="248" key="SettingsEditor" timestamp="1647442704220">
       <screen x="72" y="27" width="2488" height="1413" />
     </state>
     <state x="702" y="248" key="SettingsEditor/72.27.2488.1413/2560.0.1920.1080@2560.0.1920.1080" timestamp="1647442704220" />
-    <state x="1026" y="548" key="com.intellij.ide.util.TipDialog" timestamp="1648454265884">
-      <screen x="72" y="27" width="2488" height="1413" />
+    <state x="3296" y="398" key="com.intellij.ide.util.TipDialog" timestamp="1649248621767">
+      <screen x="2560" y="0" width="1920" height="1080" />
     </state>
-    <state x="3296" y="398" key="com.intellij.ide.util.TipDialog/72.27.2488.1413/2560.0.1920.1080@2560.0.1920.1080" timestamp="1648127933714" />
+    <state x="3296" y="398" key="com.intellij.ide.util.TipDialog/72.27.2488.1413/2560.0.1920.1080@2560.0.1920.1080" timestamp="1649248621767" />
     <state x="1026" y="548" key="com.intellij.ide.util.TipDialog/72.27.2488.1413/2560.0.1920.1080@72.27.2488.1413" timestamp="1648454265884" />
   </component>
   <component name="XDebuggerManager">
