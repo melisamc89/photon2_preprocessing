@@ -72,7 +72,7 @@ time = np.arange(0,C_0[0].shape[0]/srate,1/srate)
 #############################################################################################################3
 ##### plot traces coloring according to sound stimuli
 
-colors = ['r','b','g','magenta','yellow','cyan']
+colors = ['r','b','g','magenta','orange','cyan']
 #### plot temporal traces with multiple colors depending on the sound
 figure, axes = plt.subplots(1)
 for cell_index in range(50, 51):
@@ -163,15 +163,15 @@ for n in range(n_neurons):
                          np.floor(np.nanmin(v[:, 0])), np.ceil(np.nanmax(v[:, 0]))]
             axes.plot(*v.T, c='r')
         counter = counter + 1
-    axes.set_xlabel('Pixel',fontsize = 12)
-    axes.set_ylabel('Pixel',fontsize = 12)
+    axes.set_xlabel('Pixel',fontsize = 20)
+    axes.set_ylabel('Pixel',fontsize = 20)
 
 
-    axes = figure.add_subplot(gs[0:3, 15:48])
+    axes = figure.add_subplot(gs[0:3, 10:32])
     axes.plot(np.arange(0, len(C_0[n])) / srate, C_final[n], c='k')
-    axes.set_xlabel('t [s]', fontsize=15)
+    axes.set_xlabel('time [s]', fontsize=25)
     axes.set_yticks([])
-    axes.set_ylabel('Actvivity', fontsize=15)
+    axes.set_ylabel('Actvivity', fontsize=25)
 
     for sound_index in range(len(sounds_list)):
         for j in range(0,sounds_list[sound_index].shape[0]):
@@ -181,6 +181,9 @@ for n in range(n_neurons):
             iti_onset = sound_end
             iti_end = int(sound_end + iti_lenght*srate)
             axes.plot(np.arange(iti_onset,iti_end)/srate,C_final[n][iti_onset:iti_end], c = colors[sound_index])
+
+    axes_0 = figure.add_subplot(gs[0:3, 37:39])
+    axes_1 = figure.add_subplot(gs[0:3, 40:48])
 
     for sound_index in range(len(sounds_list)): # for everysound
         ### create matrix con trials
@@ -205,19 +208,31 @@ for n in range(n_neurons):
         temporal_var = np.arange(0,len(mean_activity))/srate
         axes.fill_between(temporal_var,mean_activity - std_activity,mean_activity + std_activity, alpha = 0.1, color = 'k')
         axes.plot(temporal_var,mean_activity, color = 'k', linewidth = 2)
-        axes.set_yticks([])
-        axes.set_ylabel('Mean Activity', fontsize = 10)
-        axes.set_xlabel('t [s]', fontsize=10)
+        #axes.set_yticks([])
+        axes.set_ylim([-0.1,0.1])
+        if sound_index == 0:
+            axes.set_ylabel('Mean Activity', fontsize = 15)
+        axes.set_xlabel('time [s]', fontsize=15)
+
+        axes_0.fill_between(temporal_var, mean_activity - std_activity, mean_activity + std_activity, alpha=0.1,
+                          color = colors[sound_index])
+        axes_0.plot(temporal_var, mean_activity, color = colors[sound_index], linewidth=2)
+        # axes.set_yticks([])
+        axes_0.set_ylim([-0.15, 0.15])
+        axes_0.set_ylabel('Mean Activity', fontsize=15)
+        axes_0.set_xlabel('time [s]', fontsize=15)
+
 
         axes = figure.add_subplot(gs[5:12,sound_index * 8  : sound_index * 8 +1])
         final_matrix[0,:] += final_matrix[0].min()
         for j in range(1,len(sounds_list[sound_index])):
-            final_matrix[j] += final_matrix[j].min() + final_matrix[:j].max()
+            final_matrix[j] += final_matrix[j].min() + 0.1 * j #+ final_matrix[:j].max()
             axes.plot(temporal_var,final_matrix[j], c = 'k')
         axes.set_yticks([])
         axes.set_title('SOUND = ' + f'{sound_index+1}' , fontsize=12)
     #    axes.set_xlabel('t [s]', fontsize=10)
-        axes.set_ylabel('Trials', fontsize = 10)
+        if sound_index == 0:
+            axes.set_ylabel('Trials', fontsize = 20)
 
         ###same for iti
         aux_matrix_iti = np.zeros((len(sounds_list[sound_index]), int(iti_lenght*srate)))
@@ -237,7 +252,7 @@ for n in range(n_neurons):
         # matrix1_norm = (aux_matrix_zs - np.min(aux_matrix_zs,axis = 1)) / (np.max( aux_matrix_zs,axis=1) - np.min(aux_matrix_zs,axis = 1 ))
         # final_matrix_iti =  matrix1_norm
 
-        axes = figure.add_subplot(gs[13:15, sound_index * 8 + 2: (sound_index +1)* 8 -1])
+        axes = figure.add_subplot(gs[13:15, sound_index * 8 + 1: (sound_index +1)* 8 -1])
         mean_activity = np.mean(final_matrix_iti,axis = 0)
         std_activity = np.std(final_matrix_iti,axis = 0)#/np.sqrt(matrix1.shape[0])
         ###save the mean for population analysis
@@ -247,20 +262,30 @@ for n in range(n_neurons):
                           color = colors[sound_index])
         axes.plot(temporal_var_iti,mean_activity, color = colors[sound_index], linewidth = 2)
         axes.set_yticks([])
-        axes.set_ylabel('Mean Activity', fontsize = 10)
-        axes.set_xlabel('t [s]', fontsize=10)
+        axes.set_ylim([-0.1,0.1])
+        #axes.set_ylabel('Mean Activity', fontsize = 10)
+        axes.set_xlabel('time [s]', fontsize=20)
 
-        axes = figure.add_subplot(gs[5:12,  sound_index * 8 + 2: (sound_index +1)* 8 -1])
+
+        axes_1.fill_between(temporal_var_iti, mean_activity - std_activity, mean_activity + std_activity, alpha=0.1,
+                          color = colors[sound_index])
+        axes_1.plot(temporal_var_iti, mean_activity, color = colors[sound_index], linewidth = 2)
+        axes_1.set_yticks([])
+        axes_1.set_ylim([-0.15, 0.15])
+        #axes_1.set_ylabel('Mean Activity', fontsize=10)
+        axes_1.set_xlabel('t [s]', fontsize=10)
+
+        axes = figure.add_subplot(gs[5:12,  sound_index * 8 + 1: (sound_index +1)* 8 -1])
         final_matrix_iti[0,:] += final_matrix_iti[0].min()
         for j in range(1,len(sounds_list[sound_index])):
-            final_matrix_iti[j] += final_matrix_iti[j].min() + final_matrix_iti[:j].max()
+            final_matrix_iti[j] += final_matrix_iti[j].min() + 0.1 * j #+ final_matrix_iti[:j].max()
             axes.plot(temporal_var_iti,final_matrix_iti[j], c = colors[sound_index])
         axes.set_yticks([])
         axes.set_title('ITI = ' + f'{sound_index+1}' , fontsize=12)
     #    axes.set_xlabel('t [s]', fontsize=10)
-        axes.set_ylabel('Trials', fontsize = 10)
+        #axes.set_ylabel('Trials', fontsize = 10)
 
-    figure.set_size_inches([20,10])
+    figure.set_size_inches([25,10])
     figure.savefig(figure_path + 'source_extraction_audiqseg_23_03_2022_traces_normed_neuron_' + f' {n}' + '.png')
 
     plt.close()
