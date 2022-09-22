@@ -16,7 +16,8 @@ import caiman as cm
 from caiman.motion_correction import MotionCorrect, high_pass_filter_space
 from caiman.source_extraction.cnmf import params as params
 from caiman.source_extraction import cnmf
-import caiman.base.rois
+from caiman.source_extraction.cnmf.cnmf import load_CNMF
+
 
 def cropping_interval():
     '''
@@ -177,10 +178,14 @@ def run_motion_correction(row,parameters,dview):
         # Get the cropping points determined by the maximal rigid shifts
         x_, _x, y_, _y = get_crop_from_pw_rigid_shifts(np.array(mc.x_shifts_els),
                                                        np.array(mc.y_shifts_els))
+
         output['meta']['cropping_points'] = [x_, _x, y_, _y]
         # Crop the movie
         logging.info(f'{name} Cropping and saving pw-rigid movie with cropping points: [x_, _x, y_, _y] = {[x_, _x, y_, _y]}')
-        m_els = m_els.crop(x_, _x, y_, _y, 0, 0)
+
+        #m_els = m_els.crop(x_, _x, y_, _y, 0, 0)
+        x1, x2, x3 = m_els.shape
+        m_els = m_els[:, x_+5:x2 - (_x+5), y_+5:x3 - (_y+5)]
         # Save the movie
         fname_tot_els = m_els.save(data_dir + 'main/' + file_name + '_els' + '.mmap', order='C')
         logging.info(f'{name} Cropped and saved rigid movie as {fname_tot_els}')
@@ -294,15 +299,17 @@ def run_alignment(rows,parameters,dview):
     mc.motion_correct(template=template0, save_movie=True)
 
     # Cropping borders
-    x_ = math.ceil(abs(np.array(mc.shifts_rig)[:, 1].max())) #if np.array(mc.shifts_rig)[:, 1].max() > 0 else 0)
-    _x = math.ceil(abs(np.array(mc.shifts_rig)[:, 1].min())) #if np.array(mc.shifts_rig)[:, 1].min() < 0 else 0)
-    y_ = math.ceil(abs(np.array(mc.shifts_rig)[:, 0].max())) #if np.array(mc.shifts_rig)[:, 0].max() > 0 else 0)
-    _y = math.ceil(abs(np.array(mc.shifts_rig)[:, 0].min())) #if np.array(mc.shifts_rig)[:, 0].min() < 0 else 0)
+    x_ = math.ceil(abs(np.array(mc.shifts_rig)[:, 1].max()) if np.array(mc.shifts_rig)[:, 1].max() > 0 else 0)
+    _x = math.ceil(abs(np.array(mc.shifts_rig)[:, 1].min()) if np.array(mc.shifts_rig)[:, 1].min() < 0 else 0)
+    y_ = math.ceil(abs(np.array(mc.shifts_rig)[:, 0].max()) if np.array(mc.shifts_rig)[:, 0].max() > 0 else 0)
+    _y = math.ceil(abs(np.array(mc.shifts_rig)[:, 0].min()) if np.array(mc.shifts_rig)[:, 0].min() < 0 else 0)
 
     # Load the motion corrected movie into memory
     movie= cm.load(mc.fname_tot_rig[0])
     # Crop all movies to those border pixels
-    movie.crop(x_, _x, y_, _y, 0, 0)
+    x1, x2 ,x3 = movie.shape
+    movie = movie[:, x_+5:x2-(_x+5), y_+5:x3-(_y+5)]
+    #movie.crop(x_, _x, y_, _y, 0, 0)
     output['meta']['cropping_points'] = [x_, _x, y_, _y]
 
     #save motion corrected and cropped movie
@@ -403,3 +410,73 @@ def run_source_extraction(row, parameters, states_db, dview, multiple_files = Fa
     row_local.loc['source_extraction_output'] = str(output)
 
     return row_local
+
+def run_component_evaluation(row, parameters, states_db, multiple_files = False):
+
+
+    row_local = row.copy()
+    row_local.loc['component_evaluation_parameters'] = str(parameters)
+    ### update motion correction version in the data base
+    row_local = db.modify_data_base_row_name(row_local, states_db, 4)
+    name = row_local.name
+
+    if multiple_files:
+        motion_correction_output = eval(row_local.loc['alignment_output'])
+    else:
+        motion_correction_output = eval(row_local.loc['motion_correction_output'])
+
+    source_extraction_output = eval(row_local.loc['source_extraction_output'])
+    input_hdf5_file_path = source_extraction_output['main']
+    input_mmap_file_path = motion_correction_output['main']
+
+    # Determine output paths
+    file_name = db.create_file_name(4, name)
+    data_dir = f'/ceph/imaging1/melisa/photon2_test/data_processing/component_evaluation/'
+    output_file_path = data_dir + f'main/{file_name}.hdf5'
+
+    # Create a dictionary with parameters
+    output = {
+        'main': output_file_path,
+        'meta': {},
+    }
+
+    # Load CNMF object (contains source extracted cells)
+    cnm = load_CNMF(input_hdf5_file_path)
+
+    # Load the original movie
+    Yr, dims, T = cm.load_memmap(input_mmap_file_path)
+    images = Yr.T.reshape((T,) + dims, order='F')
+
+    # Set the parmeters
+    cnm.params.set('quality', parameters)
+
+    # Stop the cluster if one exists
+    n_processes = psutil.cpu_count()
+    try:
+        cm.cluster.stop_server()
+    except:
+        pass
+
+    # Start a new cluster
+    c, dview, n_processes = cm.cluster.setup_cluster(backend='local',
+                                                     n_processes=n_processes,
+                                                     # number of process to use, if you go out of memory try to reduce this one
+                                                     single_thread=False)
+    # Evaluate components
+    cnm.estimates.evaluate_components(images, cnm.params, dview=dview)
+
+    logging.debug('Number of total components: ', len(cnm.estimates.C))
+    logging.debug('Number of accepted components: ', len(cnm.estimates.idx_components))
+
+    # Stop the cluster
+    dview.terminate()
+
+    # Save CNMF object
+    cnm.save(output_file_path)
+
+    # Write necessary variables to the trial index and row
+    row_local.loc['component_evaluation_parameters'] = str(parameters)
+    row_local.loc['component_evaluation_output'] = str(output)
+
+    return row_local
+

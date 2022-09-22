@@ -10,7 +10,6 @@ This scripts requires three components: - cnm files of extracted cells
 
 '''
 
-
 import caiman as cm
 import numpy as np
 import os
@@ -34,7 +33,7 @@ date = 23
 example = 0
 
 ### load cnm file
-selected_rows = db.select(states, mouse = mouse, year = year,month=month,date = date, analysis_version = [1,1,1,1])
+selected_rows = db.select(states, mouse = mouse, year = year,month=month,date = date, analysis_version = [1,1,1,1,1])
 cnm_file_path  = eval(selected_rows.iloc[0]['source_extraction_output'])['main']
 cnm = load_CNMF(cnm_file_path)
 ### load timline
@@ -66,7 +65,7 @@ sounds_list.append(log_information['sound6'])
 #sounds_list = [sounds_list.append(log_information['sound' + f'{i+1}']) for i in range(6)]
 iti = list(log_information['iti'])
 
-C_0 = cnm.estimates.C.copy()
+C_0 = new_traces#cnm.estimates.C.copy()
 time = np.arange(0,C_0[0].shape[0]/srate,1/srate)
 
 #############################################################################################################3

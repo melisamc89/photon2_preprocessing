@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="a29ed771-ca20-4117-a8c5-be04cda7813b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_base.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_base.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/events_alignment.py" beforeDir="false" afterPath="$PROJECT_DIR$/events_alignment.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/preprocessing.py" beforeDir="false" afterPath="$PROJECT_DIR$/preprocessing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/preprocessing_steps.py" beforeDir="false" afterPath="$PROJECT_DIR$/preprocessing_steps.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/running_preprocessing_2p.py" beforeDir="false" afterPath="$PROJECT_DIR$/running_preprocessing_2p.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,6 +96,14 @@
       <workItem from="1649338419143" duration="599000" />
       <workItem from="1649407804469" duration="1229000" />
       <workItem from="1650534254470" duration="6692000" />
+      <workItem from="1650635239057" duration="1432000" />
+      <workItem from="1653471883911" duration="36640000" />
+      <workItem from="1655712515684" duration="77029000" />
+      <workItem from="1659447261766" duration="3935000" />
+      <workItem from="1659603991151" duration="30447000" />
+      <workItem from="1661160490514" duration="5941000" />
+      <workItem from="1663660751093" duration="20178000" />
+      <workItem from="1663845066648" duration="289000" />
     </task>
     <servers />
   </component>
@@ -99,20 +111,24 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="3390" y="347" width="374" height="390" key="FileChooserDialogImpl" timestamp="1649407831586">
+    <state x="3390" y="347" width="424" height="491" key="FileChooserDialogImpl" timestamp="1659447282343">
       <screen x="2560" y="0" width="1920" height="1080" />
     </state>
-    <state x="3390" y="347" width="374" height="390" key="FileChooserDialogImpl/72.27.2488.1413/2560.0.1920.1080@2560.0.1920.1080" timestamp="1649407831586" />
-    <state x="1148" y="481" key="FileChooserDialogImpl/72.27.2488.1413/2560.0.1920.1080@72.27.2488.1413" timestamp="1648478228410" />
-    <state x="702" y="248" key="SettingsEditor" timestamp="1647442704220">
+    <state x="3390" y="347" width="374" height="390" key="FileChooserDialogImpl/72.27.2488.1413/2560.0.1920.1080@2560.0.1920.1080" timestamp="1659447282343" />
+    <state x="1148" y="481" width="424" height="491" key="FileChooserDialogImpl/72.27.2488.1413/2560.0.1920.1080@72.27.2488.1413" timestamp="1656076948019" />
+    <state x="3296" y="398" key="com.intellij.ide.util.TipDialog" timestamp="1663845262975">
+      <screen x="2560" y="0" width="1920" height="1080" />
+    </state>
+    <state x="3296" y="398" key="com.intellij.ide.util.TipDialog/72.27.2488.1413/2560.0.1920.1080@2560.0.1920.1080" timestamp="1663845262975" />
+    <state x="1026" y="548" key="com.intellij.ide.util.TipDialog/72.27.2488.1413/2560.0.1920.1080@72.27.2488.1413" timestamp="1655712524244" />
+    <state x="966" y="351" width="690" height="771" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1656581729509">
       <screen x="72" y="27" width="2488" height="1413" />
     </state>
-    <state x="702" y="248" key="SettingsEditor/72.27.2488.1413/2560.0.1920.1080@2560.0.1920.1080" timestamp="1647442704220" />
-    <state x="3296" y="398" key="com.intellij.ide.util.TipDialog" timestamp="1649407825445">
+    <state x="966" y="351" width="690" height="771" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/72.27.2488.1413/2560.0.1920.1080@72.27.2488.1413" timestamp="1656581729509" />
+    <state x="3183" y="239" width="672" height="678" key="search.everywhere.popup" timestamp="1663678725380">
       <screen x="2560" y="0" width="1920" height="1080" />
     </state>
-    <state x="3296" y="398" key="com.intellij.ide.util.TipDialog/72.27.2488.1413/2560.0.1920.1080@2560.0.1920.1080" timestamp="1649407825445" />
-    <state x="1026" y="548" key="com.intellij.ide.util.TipDialog/72.27.2488.1413/2560.0.1920.1080@72.27.2488.1413" timestamp="1648454265884" />
+    <state x="3183" y="239" width="672" height="678" key="search.everywhere.popup/72.27.2488.1413/2560.0.1920.1080@2560.0.1920.1080" timestamp="1663678725380" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -12,9 +12,11 @@ import numpy as np
 import math
 
 
-steps = ['cropping','motion_correction','alignment','source_extraction']
+steps = ['cropping','motion_correction','alignment','source_extraction','component_evaluation']
 
 references_path = '/ceph/imaging1/melisa/photon2_test/photon2_references_list.xlsx'
+references_path = '/ceph/imaging1/melisa/photon2_test/photon2_janek.xlsx'
+
 data_structure = ['mouse', 'year', 'month', 'date', 'example']
 
 analysis_structure = [f'{step}_v' for step in steps]
@@ -43,7 +45,7 @@ def get_query_from_dict(dictionary):
         query += f'{key} == {dictionary[key]}'
     return query
 
-def select(data_base, mouse = None, year = None, month = None, date = None, example = None, analysis_version = [0,0,0,0]):
+def select(data_base, mouse = None, year = None, month = None, date = None, example = None, analysis_version = [0,0,0,0,0]):
     '''
     Selects a dataset line
     :param data_base:
